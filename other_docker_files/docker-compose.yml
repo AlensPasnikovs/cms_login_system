@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+    web:
+        env_file:
+            - .env
+        build: .
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www
+            - mysql:/var/lib/mysql
+            - photos:/var/www/storage/app/public/photos/posts
+        depends_on:
+            - db
+
+    db:
+        env_file:
+            - .env
+        image: mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
