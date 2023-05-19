@@ -1,6 +1,6 @@
 @if (count($errors->get('delete_password')) > 0)
 <script type="text/javascript">
-window.onload = () => {
+   window.onload = () => {
    $('#deleteAccountModal').removeClass('fade');
    $('#deleteAccountModal').modal('show');
    $('#deleteAccountModal').addClass('fade');
@@ -40,11 +40,11 @@ window.onload = () => {
                   @method('delete')
                   <div class="mb-3">
                      <div class="col-md-10 col-lg-8">
-                        <input id="del_password" type="text" class="form-control  shadow-sm" name="delete_password" 
-                        placeholder="{{ __('messages.password') }}" autofocus>
+                        <input id="del_password" type="text" class="form-control  shadow-sm" name="delete_password"
+                           placeholder="{{ __('messages.password') }}" autofocus>
                         <ul class="text-danger my-2">
                            @foreach ($errors->get('delete_password') as $error)
-                              <li>{{ $error }}</li>
+                           <li>{{ $error }}</li>
                            @endforeach
                         </ul>
                      </div>
@@ -52,7 +52,8 @@ window.onload = () => {
                   <div class="d-flex justify-content-end gap-3 ">
                      <button type="button" class="btn border text-dark-emphasis shadow-sm px-3"
                         data-bs-dismiss="modal">{{ __('messages.cancel_button') }}</button>
-                     <button type="submit" class="btn btn-danger px-3">{{ __('messages.delete_account_button') }}</button>
+                     <button type="submit" class="btn btn-danger px-3">{{ __('messages.delete_account_button')
+                        }}</button>
                   </div>
                </form>
             </div>
@@ -60,4 +61,3 @@ window.onload = () => {
       </div>
    </div>
 </div>
-

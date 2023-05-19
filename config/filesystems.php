@@ -34,6 +34,8 @@ return [
          'driver' => 'local',
          'root' => storage_path('app'),
          'throw' => false,
+         'user' => 'www-data',
+         'group' => 'www-data',
       ],
 
       'public' => [

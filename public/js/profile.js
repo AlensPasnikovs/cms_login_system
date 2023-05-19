@@ -1,5 +1,5 @@
-import { checkEmail } from "./reusable_functions.js";
-import { checkName } from "./reusable_functions.js";
+// import { checkEmail } from "./reusable_functions.js";
+// import { checkName } from "./reusable_functions.js";
 
 jQuery(function ($) {
     //email client side validation

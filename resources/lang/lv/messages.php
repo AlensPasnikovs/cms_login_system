@@ -94,5 +94,6 @@ return [
 
    'edit_post' => 'Labot rakstu',
 
+   'subdomain' => 'Apakšdomēns',
 
 ];

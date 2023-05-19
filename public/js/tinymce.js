@@ -88,9 +88,6 @@ jQuery(function () {
             if (result.isConfirmed) {
                 $(this).unbind();
                 $(this).submit();
-                console.log("clicked");
-            } else {
-                console.log("not clicked");
             }
         });
     });
