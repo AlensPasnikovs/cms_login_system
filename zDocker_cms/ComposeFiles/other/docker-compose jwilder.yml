@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  #PHP service
+  php:
+    container_name: php_${COMPOSE_PROJECT_NAME}
+    image: php-fpm-alpine-cms
+    environment:
+      APP_ENV: "${APP_ENV}"
+      CONTAINER_ROLE: "app"
+      VIRTUAL_HOST: "${COMPOSE_PROJECT_NAME}.prakse.test"
+      VIRTUAL_PROTO: "fastcgi"
+    working_dir: /var/www/html
+    volumes:
+      - user_data:/var/www/html
+    networks:
+      - prakse-test
+
+  #Database server
+  database:
+    container_name: database_${COMPOSE_PROJECT_NAME}
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - prakse-test
+
+  # Node server
+  node:
+    container_name: node_${COMPOSE_PROJECT_NAME}
+    image: node-alpine-cms
+    volumes:
+      - user_data:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    tty: true
+    networks:
+      - prakse-test
+    depends_on:
+      - php
+
+networks:
+  prakse-test:
+    external: true
+    name: prakse-test
+
+volumes:
+  db-data:
+    name: db-data_${COMPOSE_PROJECT_NAME}
+  user_data:
+    name: user_data_${COMPOSE_PROJECT_NAME}
+  node_modules:
+    name: node_modules_cms
+    driver: local

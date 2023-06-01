@@ -97,4 +97,5 @@ return [
    'edit_post' => 'Edit post',
 
    'subdomain' => 'Subdomain',
+   'creating_profile' => 'Creating profile',
 ];

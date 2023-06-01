@@ -23,6 +23,8 @@ done
 
 chown -R 1000:1000 /var/www/
 
+php artisan queue:work --daemon &
+
 php-fpm -D
 nginx -g "daemon off;"
 

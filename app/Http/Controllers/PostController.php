@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller {
@@ -13,13 +15,32 @@ class PostController extends Controller {
     *
     * @return \Illuminate\Http\Response
     */
-   public function index() {
-      $posts = Post::all();
-      return view('tiny_mce.index', compact('posts'));
-   }
-   public function posts() {
-      $posts = Post::all();
-      return view('tiny_mce.index', compact('posts'));
+   // public function index() {
+   //    $posts = Post::all();
+   //    return view('tiny_mce.index', compact('posts'));
+   // }
+   // public function posts() {
+   //    $posts = Post::all();
+   //    return view('tiny_mce.index', compact('posts'));
+   // }
+
+   public function redirectToSubdomain() {
+      $user = auth()->user();
+      // Check if the user has a subdomain.
+      if (!empty($user->subdomain)) {
+         // Generate a new token for this login session.
+         $token = Str::random(32);
+         DB::table('sso_tokens')->insert([
+            'token' => $token,
+            'user_id' => $user->id,
+         ]);
+
+         // Redirect to the user's container.
+         return redirect("http://{$user->subdomain}.prakse.localhost/sso-entry?token={$token}");
+      }
+
+      // If the user doesn't have a container, redirect them to the default location.
+      return redirect('/');
    }
 
    /**

@@ -1,0 +1,32 @@
+## Save container to image
+
+docker commit 968e22f4c6958b85dc01c11d1c95de8034597bbe8472ddd5253b3a68bbf10ecf php_v3_saved
+docker commit 24f53ba431837af3705521336ccb327fc956f3e53eb375f3ddc2896dcca879c7 mysql_v3_saved
+
+## SAVE MYSQL VOLUME
+
+docker run -d --rm -v sag_db_data:/data -v $(pwd):/backup alpine tar -czvf /backup/mysql_v3_vol.tar.gz -C /data .
+
+## SAVE PHP VOLUME
+
+docker run -d --rm -v sag_user_data:/data -v $(pwd):/backup alpine tar -czvf /backup/php_v3_vol.tar.gz -C /data .
+
+<!-- ## SAVE NODE VOLUME
+
+docker run -d --rm -v node_modules_cms:/data -v $(pwd):/backup alpine tar -czvf /backup/node_modules_vol.tar.gz -C /data . -->
+
+## RESTORE MYSQL VOLUME
+
+docker run -d --rm -v mysql_db_data:/data -v $(pwd):/backup alpine tar -xzvf /backup/mysql_vol.tar.gz -C /data
+
+## RESTORE PHP VOLUME
+
+docker run -d --rm -v zane_user_data:/data -v $(pwd):/backup alpine tar -xzvf /backup/php_vol.tar.gz -C /data
+
+<!-- ## RESTORE NODE VOLUME
+
+docker run -d --rm -v zane_node_modules:/data -v $(pwd):/backup alpine tar -xzvf /backup/node_modules_vol.tar.gz -C /data -->
+
+# Start project
+
+docker-compose -f new_blog.yml -p $name up -d

@@ -52,9 +52,20 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controller
 //tiny_mce
 // Route::middleware('auth')->group(function () {
 Route::get('/', function () {
-   return redirect()->route('tiny_mce');
+   if (auth()->check()) {
+      // User is logged in, redirect them to their homepage
+      return redirect('/profile');
+   }
+   // User is not logged in, redirect them to the register page
+   return redirect('/register');
 });
-Route::get('/posts', [PostController::class, 'index'])->name('tiny_mce');
+
+
+Route::middleware('auth')->group(function () {
+   Route::get('/posts', [PostController::class, 'redirectToSubdomain'])->name('tiny_mce');
+});
+
+
 Route::post('create_post', [PostController::class, 'store'])->name('create_post');
 
 Route::get('post/{id}', [PostController::class, 'show'])->name('post_show');

@@ -230,5 +230,11 @@ return [
    //posts error messages
    'post_not_found' => 'Post not found',
 
-
+   'subdomain' => [
+      'required' => 'The :attribute field is required.',
+      'string' =>  'The :attribute must be a string.',
+      'max' =>  'The :attribute must not be greater than :max characters.',
+      'unique' =>  'The :attribute has already been taken.',
+      'regex' =>  'The :attribute field should only contain lowercase letters, numbers, and hyphens (-).',
+   ],
 ];

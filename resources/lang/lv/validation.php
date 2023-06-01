@@ -257,4 +257,11 @@ return [
    'post_not_found' => 'Raksts nav atrasts.',
 
 
+   'subdomain' => [
+      'required' => 'Apakšdomēna lauks ir nepieciešams.',
+      'string' =>  "Apakšdomēnam ir jābūt rakstzīmju virknei.",
+      'max' =>  "Apakšdomēns nedrīkst būt lielāks par :max rakstzīmēm.",
+      'unique' =>  "Šis apakšdomēns jau ir aizņemts.",
+      'regex' =>  "Apakšdomēns var saturēt tikai mazos latīņu burtus, ciparus un domuzīmes (-).",
+   ],
 ];

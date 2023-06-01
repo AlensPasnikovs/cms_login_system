@@ -1,0 +1,62 @@
+version: "3.9"
+services:
+  #PHP service
+  php:
+    container_name: ${COMPOSE_PROJECT_NAME}_php
+    image: php-fpm-alpine-cms
+    environment:
+      APP_ENV: "${APP_ENV}"
+      APP_URL: http://${COMPOSE_PROJECT_NAME}.prakse.test
+      CONTAINER_ROLE: "app"
+    working_dir: /var/www/html
+    volumes:
+      - cms_user_data:/var/www/cms/${COMPOSE_PROJECT_NAME}
+    ports:
+      - "9000"
+    networks:
+      - prakse-test
+
+  #Database server
+  cms_database:
+    container_name: ${COMPOSE_PROJECT_NAME}_database
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306"
+    networks:
+      - prakse-test
+
+  # Node server
+  node:
+    container_name: ${COMPOSE_PROJECT_NAME}_node
+    image: node-alpine-cms
+    environment:
+      APP_URL: http://${COMPOSE_PROJECT_NAME}.prakse.test
+      ASSET_URL: http://${COMPOSE_PROJECT_NAME}.prakse.test
+    volumes:
+      - cms_user_data:/var/www/cms/${COMPOSE_PROJECT_NAME}
+      - node_modules:/var/www/cms/${COMPOSE_PROJECT_NAME}/node_modules
+    tty: true
+    networks:
+      - prakse-test
+    depends_on:
+      - php
+
+networks:
+  prakse-test:
+    external: true
+    name: prakse-test
+
+volumes:
+  db-data:
+    name: ${COMPOSE_PROJECT_NAME}_db-data
+  cms_user_data:
+    name: cms_user_data
+  node_modules:
+    name: node_modules_cms

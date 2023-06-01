@@ -95,5 +95,6 @@ return [
    'edit_post' => 'Labot rakstu',
 
    'subdomain' => 'Apakšdomēns',
+   'creating_profile' => 'Veidojam jūsu profilu',
 
 ];
